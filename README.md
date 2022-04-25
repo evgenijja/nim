@@ -1,8 +1,6 @@
 # Igra Nim
 
-### Skupinski projekt pri predmetu Umetna inteligenca: spodbujevalno učenje za igro Nim
-
-Primerjava različnih metod spodbujevalnega učenja na tej igri.
+Skupinski projekt pri predmetu umetna inteligenca: Primerjava različnih metod spodbujevalnega učenja na tej igri.
 
 ### Ideje
 
@@ -10,13 +8,18 @@ Primerjava različnih metod spodbujevalnega učenja na tej igri.
 * SARSA algoritem
 * izboljšan min-max algoritem (z Alpha Beta Pruning)
 
+### Vrstni red dela
+
+1. Class Nim - zelo kul zgled je [tukej](https://cs50.harvard.edu/ai/2020/projects/4/nim/) (glej zip datoteko pod Getting started)
+2. Vsaka svoj algoritem
+3. Primerjava
+
 ### Uporabni linki
 
 * [https://cs50.harvard.edu/ai/2020/projects/4/nim/](https://cs50.harvard.edu/ai/2020/projects/4/nim/) navodila za domačo nalogo kjer so morali nardit Nim z Q-learningom (zraven so tudi ogrodja funkcij)
+  * dve rešitvi te naloge: [prva]https://github.com/Fatiepie/Nim.ai), [druga](https://github.com/diesel707/Knights/tree/nim)
 * [http://www.diva-portal.org/smash/get/diva2:814832/FULLTEXT01.pdf](http://www.diva-portal.org/smash/get/diva2:814832/FULLTEXT01.pdf) primerjava Q-learning in SARSA ampak samo psevdokoda
-* [https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/](https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/) še ena navodila za dn
-* [https://github.com/Fatiepie/Nim.ai](https://github.com/Fatiepie/Nim.ai) primer implementacije
-* [https://github.com/diesel707/Knights/tree/nim](https://github.com/diesel707/Knights/tree/nim) primer implementacije
+ * [https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/](https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/) še ena navodila za dn
 * [https://medium.com/100-days-of-algorithms/day-90-simple-nim-ai-864b2fdf9e8a](https://medium.com/100-days-of-algorithms/day-90-simple-nim-ai-864b2fdf9e8a) analiza različnih opponentov? Idk če uporabno
 * [https://www.upgrad.com/blog/min-max-algorithm-in-ai/#Breaking_down_the_min_max_algorithm_in_AI](https://www.upgrad.com/blog/min-max-algorithm-in-ai/#Breaking_down_the_min_max_algorithm_in_AI) minmax algoritem
 * [https://medium.com/zero-equals-false/n-step-td-method-157d3875b9cb](https://medium.com/zero-equals-false/n-step-td-method-157d3875b9cb) metoda TD? Združuje SARSA in Monte Carlo? Tega si še nisem tok pogledala
