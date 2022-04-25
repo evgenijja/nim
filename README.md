@@ -2,6 +2,11 @@
 
 Skupinski projekt pri predmetu umetna inteligenca: Primerjava različnih metod spodbujevalnega učenja na tej igri.
 
+### Pravila igre
+
+* poljubno število kupov kovancev s poljubnim številom kovancev v vsakem kupu (random? ali pa lahko določi igralec na začetku?)
+* kdor vzame zadnji kovanec izgubi
+
 ### Ideje
 
 * Q-learning
