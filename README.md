@@ -17,7 +17,7 @@ Skupinski projekt pri predmetu umetna inteligenca: Primerjava različnih metod s
 ### Uporabni linki
 
 * [https://cs50.harvard.edu/ai/2020/projects/4/nim/](https://cs50.harvard.edu/ai/2020/projects/4/nim/) navodila za domačo nalogo kjer so morali nardit Nim z Q-learningom (zraven so tudi ogrodja funkcij)
-  * dve rešitvi te naloge: [prva]https://github.com/Fatiepie/Nim.ai), [druga](https://github.com/diesel707/Knights/tree/nim)
+  * dve rešitvi te naloge: [prva](https://github.com/Fatiepie/Nim.ai), [druga](https://github.com/diesel707/Knights/tree/nim)
 * [http://www.diva-portal.org/smash/get/diva2:814832/FULLTEXT01.pdf](http://www.diva-portal.org/smash/get/diva2:814832/FULLTEXT01.pdf) primerjava Q-learning in SARSA ampak samo psevdokoda
  * [https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/](https://www.cs.rhodes.edu/~kirlinp/courses/ai/f14/projects/proj4/) še ena navodila za dn
 * [https://medium.com/100-days-of-algorithms/day-90-simple-nim-ai-864b2fdf9e8a](https://medium.com/100-days-of-algorithms/day-90-simple-nim-ai-864b2fdf9e8a) analiza različnih opponentov? Idk če uporabno
