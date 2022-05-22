@@ -1,5 +1,6 @@
 import copy
 import random
+from math import inf
 
 
 def generate_piles(n, m):
@@ -31,8 +32,7 @@ def play_in_console_vs_minimax():
     input1 = input("Vpisi seznam stevil, ki predstavljajo zacetno st. predmetov v kupcku. (npr: 4 5 6):  ")
     game = list(map(lambda x: int(x.strip()), input1.strip().split(" ")))
     print("Zacetno stanje: ", game, "Zacne igralec 0.")
-    print(
-        "na vsakem koraku vpisi potezo v obliki para stevil. npr: 3 4 pomeni, da iz tretjega kupcka odstranis 4 predmete.")
+    print("Na vsakem koraku vpisi potezo v obliki para stevil. npr: 3 4 pomeni, da iz tretjega kupcka odstranis 4 predmete.")
     nim = Nim(game)
     while not nim.check_for_winner():
         poteza = input(f"Igralec {nim.player}: vpisi potezo: ")
@@ -40,7 +40,7 @@ def play_in_console_vs_minimax():
         nim.make_move((x - 1, y))
         print(nim.piles)
 
-        if (nim.check_for_winner()):
+        if nim.check_for_winner():
             break
 
         nim.minimax_play(4)
@@ -52,10 +52,10 @@ def play_in_console_vs_minimax():
 class Nim():
 
     def __init__(self, initial):
-        "Initialize game"
-        "piles .... list of numbers - each number represents # of coins in each pile"
-        "player ... 0 or 1"
-        "winner ... 0 or 1 or -1 (-1 means no winner yet)"
+        """Initialize game
+        piles .... list of numbers - each number represents # of coins in each pile
+        player ... 0 or 1
+        winner ... 0 or 1 or -1 (-1 means no winner yet)"""
         self.piles = initial.copy()
         self.player = 0
         self.winner = -1
@@ -103,8 +103,6 @@ class Nim():
         else:
             raise Exception("Winner already determined")
 
-
-
     # ----------------------------------------------------------------------------------
     # ---------- minimax_1   ----------------------------------
 
@@ -132,44 +130,46 @@ class Nim():
         return eval_result
 
     def minimax_play(self, depth):
-        result = self.minimax(depth, copy.deepcopy(self), self.player)
-        print("Minimax izbere : ", end="")
-        print(result)
+        result = self.minimax(depth, copy.deepcopy(self), self.player, -1e10, 1e10)
+        print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}. preprican? {result[0]}")
         self.make_move(result[1])
 
     # vrne [best_result, move/action]
-    def minimax(self, depth, tmp_nim, maxing_player):
-        data = []
+    def minimax(self, depth, tmp_nim, maxing_player, alpha, beta):
         possible_moves = tmp_nim.possible_actions()
+        maximize = maxing_player == tmp_nim.player
+        best_eval = 1e10 * (1 + -2 * maximize)
+        best_move = None
 
         for move in possible_moves:
             nim_moved = copy.deepcopy(tmp_nim)
             nim_moved.make_move(move)
+
             if depth == 0 or nim_moved.winner != -1:
                 move_eval = self.evaluate(nim_moved)
             else:
-                move_eval = self.minimax(depth - 1, nim_moved, maxing_player)[0]
+                move_eval = self.minimax(depth - 1, nim_moved, maxing_player, alpha, beta)[0]
 
-            data.append([move_eval, move])
+            if maximize:
+                if move_eval > best_eval:
+                    best_eval = move_eval
+                    best_move = move
 
-        # zdej izberemo najbolsjo evaluacijo glede na to a smo maxing ali minimizing player
-        best_eval = 0
-        best_eval_data = data[0]
-
-        for d in data:
-            if tmp_nim.player == maxing_player:
-                if d[0] > best_eval:
-                    best_eval = d[0]
-                    best_eval_data = d
+                    alpha = max(alpha, best_eval)
+                    if beta <= alpha:
+                        break
             else:
-                if d[0] < best_eval:
-                    best_eval = d[0]
-                    best_eval_data = d
+                if move_eval < best_eval:
+                    best_eval = move_eval
+                    best_move = move
 
-        return best_eval_data
+                    beta = min(beta, best_eval)
+                    if beta <= alpha:
+                        break
+
+        return [best_eval, best_move]
 
 
 if __name__ == "__main__":
-    # play_in_console_vs_minimax()
     play_in_console_vs_minimax()
     # play_in_console()
