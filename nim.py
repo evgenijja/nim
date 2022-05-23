@@ -35,21 +35,19 @@ def play_in_console_vs_minimax():
     print("Na vsakem koraku vpisi potezo v obliki para stevil. npr: 3 4 pomeni, da iz tretjega kupcka odstranis 4 predmete.")
     nim = Nim(game)
     while not nim.check_for_winner():
-        poteza = input(f"Igralec {nim.player}: vpisi potezo: ")
-        x, y = list(map(lambda x: int(x.strip()), poteza.strip().split(" ")))
-        nim.make_move((x - 1, y))
-        print(nim.piles)
-
-        if nim.check_for_winner():
-            break
-
-        nim.minimax_play(4)
+        if nim.player == 0:
+            poteza = input(f"Igralec {nim.player}: vpisi potezo: ")
+            x, y = list(map(lambda z: int(z.strip()), poteza.strip().split(" ")))
+            nim.make_move((x - 1, y))
+        else:
+            # poteza algoritma
+            nim.minimax_play(4)
         print(nim.piles)
 
     print(f"Zmagal je igralec {nim.player}!")
 
 
-class Nim():
+class Nim:
 
     def __init__(self, initial):
         """Initialize game
@@ -130,12 +128,14 @@ class Nim():
         return eval_result
 
     def minimax_play(self, depth):
+        """ Makes best move selected by minmay algorithm."""
         result = self.minimax(depth, copy.deepcopy(self), self.player, -1e10, 1e10)
         print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}. preprican? {result[0]}")
         self.make_move(result[1])
 
-    # vrne [best_result, move/action]
     def minimax(self, depth, tmp_nim, maxing_player, alpha, beta):
+        """ Runs minmax algorithm on a copy of a game and finds the best move.
+        Returns [best_result, move/action]"""
         possible_moves = tmp_nim.possible_actions()
         maximize = maxing_player == tmp_nim.player
         best_eval = 1e10 * (1 + -2 * maximize)
