@@ -127,10 +127,11 @@ class Nim:
 
         return eval_result
 
-    def minimax_play(self, depth):
+    def minimax_play(self, depth, printing=True):
         """ Makes best move selected by minmay algorithm."""
         result = self.minimax(depth, copy.deepcopy(self), self.player, -1e10, 1e10)
-        print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}. preprican? {result[0]}")
+        if printing:
+            print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}. preprican? {result[0]}")
         self.make_move(result[1])
 
     def minimax(self, depth, tmp_nim, maxing_player, alpha, beta):
