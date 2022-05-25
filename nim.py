@@ -32,7 +32,8 @@ def play_in_console_vs_minimax():
     input1 = input("Vpisi seznam stevil, ki predstavljajo zacetno st. predmetov v kupcku. (npr: 4 5 6):  ")
     game = list(map(lambda x: int(x.strip()), input1.strip().split(" ")))
     print("Zacetno stanje: ", game, "Zacne igralec 0.")
-    print("Na vsakem koraku vpisi potezo v obliki para stevil. npr: 3 4 pomeni, da iz tretjega kupcka odstranis 4 predmete.")
+    print(
+        "Na vsakem koraku vpisi potezo v obliki para stevil. npr: 3 4 pomeni, da iz tretjega kupcka odstranis 4 predmete.")
     nim = Nim(game)
     while not nim.check_for_winner():
         if nim.player == 0:
@@ -127,11 +128,20 @@ class Nim:
 
         return eval_result
 
+    def evaluate2(self, nim_instance):
+        """Bolj neumna hevristika. Ce pridemo do konca igre izbere zmagovalno potezo,
+         sicer so vse poteze enakovredno ocenjene."""
+        if nim_instance.winner != -1:
+            # ze imamo zmagovalca
+            return (nim_instance.winner * 2) - 1
+        return 0
+
+
     def minimax_play(self, depth, printing=True):
         """ Makes best move selected by minmay algorithm."""
         result = self.minimax(depth, copy.deepcopy(self), self.player, -1e10, 1e10)
         if printing:
-            print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}. preprican? {result[0]}")
+            print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}.")
         self.make_move(result[1])
 
     def minimax(self, depth, tmp_nim, maxing_player, alpha, beta):
