@@ -206,10 +206,13 @@ def random_opponent(n, algorithm):
                     wins["ai"] += 1
     return wins
 
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
-print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+# print(random_opponent(100, alg))
+
+
+        
