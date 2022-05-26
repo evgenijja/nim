@@ -2,6 +2,7 @@
 from nim import *
 import random
 import numpy as np
+from auxillary import *
 
 def switch_state(state, action):
     """Switches state accordind to action."""
@@ -16,13 +17,14 @@ def switch_state(state, action):
 
 class Qlearning():
 
-    def __init__(self, alpha, gamma, epsilon):
+    def __init__(self, alpha, gamma, epsilon, smart=False):
         """Initialize the process with parameters and empty Q-table 
         (all states and actions at the beginning are considered to have value 0)"""
         self.alpha = alpha
         self.epsilon = epsilon
         self.gamma = gamma
         self.Qtable = dict() 
+        self.smart = smart
 
 
     def choose_action(self, state, epsilon_greedy=True):
@@ -63,7 +65,10 @@ class Qlearning():
             old_q = 0
 
         new_state = switch_state(old_state, action)
-        new_action = self.choose_action(new_state, epsilon_greedy=False)
+        if self.smart:
+            new_action = make_smart_move(new_state)
+        else:
+            new_action = self.choose_action(new_state, epsilon_greedy=False)
         if new_action != 0 and new_action != None:
             new_new_state = switch_state(new_state, new_action)
             game = Nim(new_new_state)
@@ -81,7 +86,6 @@ class Qlearning():
                         best_reward = a_value
         else:
             best_reward = 0
-
         # update q value according to bellman equation
         new_q = old_q + self.alpha * ((reward + self.gamma * best_reward) - old_q)
         self.Qtable[(tuple(old_state), action)] = new_q
@@ -95,9 +99,8 @@ class Qlearning():
 # in se mu posreči da izbere ravno (1,2) (za kar je 1/3 možnosti) bo seveda zmagal
 # piles = [0,3,0]
 
-piles = [5,5,5] 
 
-def train_model(n, algorithm=Qlearning):
+def train_model(n, algorithm=Qlearning, piles=generate_piles(10,10)):
     """Training the model n times with algorithm (for e/xample Qlearning()). 
     We train the model with the same game all the time?"""
 
@@ -129,13 +132,12 @@ def train_model(n, algorithm=Qlearning):
                 if moves[game.player][0] is not None:
                     algorithm.update_model(moves[game.player][0], moves[game.player][1], 0)
                 
-
     return algorithm
 
 
 # ===================== FUNCTIONS FOR PLAYING =======================================
 
-def play(algorithm=Qlearning(0.5, 0.1, 0.1), human=None):
+def play(algorithm=Qlearning(0.5, 0.1, 0.1), human=None, piles=generate_piles(10,10)):
     """Human is either 0 or 1"""
     if human == None:
         human = random.randint(0, 1) # randomly chose who if human is player 1 or 0
@@ -172,47 +174,7 @@ def play(algorithm=Qlearning(0.5, 0.1, 0.1), human=None):
     return "Winner is: " + w
 
 alg = Qlearning(0.5, 0.1, 0.1)
-train_model(10000, alg)
+# train_model(10000, alg)
 
-# ============================== PLAYING WITH A RANDOM OPPONENT ===================================
-
-
-def random_opponent(n, algorithm):
-    """Play against random opponent n times and count wins"""
-    
-    wins = {"ai" : 0, "random opponent" : 0}
-    for i in range(n):
-        opponent = random.randint(0, 1)
-        game = Nim(piles)
-
-        while game.winner == -1:
-            possible_actions = game.possible_actions()
-            if game.player == opponent:
-                action = random.choice(possible_actions)
-
-            else:
-                state = game.piles.copy()
-                action = algorithm.choose_action(state, epsilon_greedy=False)
-
-            if action != 0:
-                game.make_move(action)
-            else:
-                print(game.check_for_winner())
-
-            if game.winner != -1:
-                if game.winner == opponent:
-                    wins["random opponent"] += 1
-                else:
-                    wins["ai"] += 1
-    return wins
-
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-# print(random_opponent(100, alg))
-
-
+# play(train_model(10000, Qlearning(0.1, 0.5, 0.1, smart=True), piles=[3, 3, 5, 7]), piles=[3,3,5,7]) 
         
