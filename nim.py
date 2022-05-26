@@ -3,10 +3,13 @@ import random
 from math import inf
 
 
-def generate_piles(n, m):
+def generate_piles(n, m, fixed=False):
     """Generates random number of piles (between 1 and n) each with random number of coins (between 1 and m)"""
     game = []
-    num_piles = random.randint(1, n)
+    if fixed:
+        num_piles = n
+    else:
+        num_piles = random.randint(1, n)
     for i in range(num_piles):
         num_coins = random.randint(1, m)
         game.append(num_coins)
@@ -137,12 +140,13 @@ class Nim:
         return 0
 
 
-    def minimax_play(self, depth, printing=True):
+    def minimax_play(self, depth, printing=True, timing=False):
         """ Makes best move selected by minmay algorithm."""
         result = self.minimax(depth, copy.deepcopy(self), self.player, -1e10, 1e10)
         if printing:
             print(f"Minimax izbere : {result[1][0] + 1} {result[1][1]}.")
         self.make_move(result[1])
+
 
     def minimax(self, depth, tmp_nim, maxing_player, alpha, beta):
         """ Runs minmax algorithm on a copy of a game and finds the best move.
@@ -179,6 +183,7 @@ class Nim:
                         break
 
         return [best_eval, best_move]
+
 
 
 if __name__ == "__main__":
