@@ -100,7 +100,7 @@ class Qlearning():
 # piles = [0,3,0]
 
 
-def train_model(n, algorithm=Qlearning, piles=generate_piles(10,10)):
+def train_model(n, algorithm, piles):
     """Training the model n times with algorithm (for e/xample Qlearning()). 
     We train the model with the same game all the time?"""
 

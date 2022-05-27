@@ -7,17 +7,17 @@ from auxillary import *
 # =============================== FUNCTIONS FOR PLAYING AGAINST EACHOTHER =================================================
 
 
-def qlearn_vs_sarsa(n, num_trainings,  alg1=Qlearning(0.6, 0.7, 0.4), alg2=SarsaAlgorithm(0.5, 1, 0.8), optimal_actions=False):
+def qlearn_vs_sarsa(n,  alg1, alg2, generated_piles, optimal_actions=False):
     """Qlearning and SARSA play against each-other."""
     
     wins = {"Q-learning" : 0, "SARSA" : 0}
     ratios_qlearning, ratios_sarsa = [], []
     for i in range(n):
         counter_q, counter_s = [0,0], [0,0] # [num optimal moves made, num all times when optimal move was possible]
-        generated_piles = generate_piles(5,10)
+        # generated_piles = generate_piles(5,10)
         game = Nim(generated_piles)
-        train_model(num_trainings, alg1, piles=generated_piles)
-        train_model(num_trainings, alg2, piles=generated_piles)
+        # train_model(num_trainings, alg1, piles=generated_piles)
+        # train_model(num_trainings, alg2, piles=generated_piles)
 
         qlearn = random.randint(0, 1)
         while game.winner == -1:
@@ -74,7 +74,7 @@ def alg_vs_minimax(algorithm, n, num_trainings, optimal_moves=False):
     for i in range(n):
         counter_alg, counter_m = [0,0],[0,0]
         piles = generate_piles(5,10)
-        alg = train_model(num_trainings, algorithm, piles=piles)
+        alg = train_model(num_trainings, algorithm, piles)
         nim = Nim(piles)
 
         # randomly choose which player minimax is
@@ -130,11 +130,11 @@ def alg_vs_minimax(algorithm, n, num_trainings, optimal_moves=False):
 
 # ==================================== RANDOM OPPONENT =============================================
 
-def random_opponent(n, alg, num_trainings, p, optimal_moves=False):
+def random_opponent(n, algorithm, p, optimal_moves=False):
     """Play against random opponent n times and count wins.
     Algorithm is either Qlearning or SARSA"""
     
-    algorithm = train_model(num_trainings, alg, piles=p)
+    # algorithm = train_model(num_trainings, alg, piles=p)
 
     wins = {"ai" : 0, "random opponent" : 0}
     ratios = []
@@ -188,7 +188,7 @@ def recognize_action(state1, state2):
     return action
 
 
-def random_opponent_minimax(n, piles, timing=False, optimal_moves=False):
+def random_opponent_minimax(n, piles, depth, timing=False, optimal_moves=False):
     """Minimax plays against a random opponent."""
 
     times = []
@@ -205,7 +205,7 @@ def random_opponent_minimax(n, piles, timing=False, optimal_moves=False):
                 state1 = nim.piles.copy()
                 # poteza algoritma
                 start = time.time()
-                nim.minimax_play(4, printing=False)
+                nim.minimax_play(depth, printing=False)
                 end = time.time()
                 t = end-start
                 times.append(t)
@@ -246,12 +246,12 @@ def random_opponent_minimax(n, piles, timing=False, optimal_moves=False):
 
 # ==================================== SMART OPPONENT ==============================================
 
-def smart_opponent(n, alg, num_train, piles, optimal_moves=False):
+def smart_opponent(n, algorithm, piles, optimal_moves=False):
     """Play against a smart opponent n times and count wins.
     Algorithm is either Qlearning or SARSA
     If optimal_moves then the algorithm also return the ration of optimal moves made when they were possible"""
     
-    algorithm = train_model(num_train, alg, piles=piles)
+    # algorithm = train_model(num_train, alg, piles=piles)
 
     # optimal_moves_made, optimal_moves_possible = 0,0
     ratios = []
